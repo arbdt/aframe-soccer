@@ -49,6 +49,12 @@
                     <a-plane color="#FFF" height="90" width="0.15" rotation="-90 0 0" position="22.425 0.001 0"></a-plane>
                     <a-plane color="#FFF" height="0.15" width="45" rotation="-90 0 0" position="0 0.001 45.075"></a-plane>
                 </a-entity>
+                <!-- Corner arcs --><a-entity>
+                    <a-ring color="#FFF" geometry="thetaStart:270; thetaLength:90;" radius-outer="1" radius-inner="0.85" position="-22.425 0.001 -45.075" rotation="-90 0 0"></a-ring>
+                    <a-ring color="#FFF" geometry="thetaStart:180; thetaLength:90;" radius-outer="1" radius-inner="0.85" position="22.425 0.001 -45.075" rotation="-90 0 0"></a-ring>
+                    <a-ring color="#FFF" geometry="thetaStart:0; thetaLength:90;" radius-outer="1" radius-inner="0.85" position="-22.425 0.001 45.075" rotation="-90 0 0"></a-ring>
+                    <a-ring color="#FFF" geometry="thetaStart:90; thetaLength:90;" radius-outer="1" radius-inner="0.85" position="22.425 0.001 45.075" rotation="-90 0 0"></a-ring>
+                </a-entity>
                 <!-- Centre ring --><a-ring color="#FFF" arc="360" radius-outer="9.15" radius-inner="9" position="0 0.001 0" rotation="-90 0 0"></a-ring>
                 <!-- Centre line --><a-plane color="#FFF" width="45" height="0.15" position="0 0.001 0" rotation="-90 0 0"></a-plane>
                 <!-- Centre mark --><a-circle color="#FFF" radius="0.15" position="0 0.001 0" rotation="-90 0 0"></a-circle>
