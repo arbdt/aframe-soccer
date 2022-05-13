@@ -55,6 +55,31 @@
             <a-plane id="worldEastEdge" height="2.44" width="96" position="25.5 1.22 0" rotation="0 -90 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
             <a-plane id="worldSouthEdge" height="2.44" width="51" position="0 1.22 48" rotation="0 180 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
 
+            <!-- Create arena goals -->
+            <a-entity id="northGoal" height="2.44" width="7.32" depth="1.5" position="0 1.21 -45.75" >
+                <a-box material="transparent: false; opacity: 1;" color="#ff0000"
+                    height="0.15" width="7.32" depth="1.5" position="0 1.2 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                <a-box material="transparent: false; opacity: 1;" color="#ff0000"
+                    height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                <a-box material="transparent: false; opacity: 1;" color="#ff0000"
+                    height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                <a-text id="northGoalScore" color="#ff0000" value="0" position="0 2.5 0" align="center" anchor="center" baseline="center" scale="10 10 10"></a-text>
+                <a-plane id="northGoalBack" material="opacity: 0.5; emissive: #ff0000; emissiveIntensity: 10" color="#ff0000" height="2.44" width="7.32" rotation="0 0 0" position="0 0 -0.76" ammo-body="type: static" ammo-shape="type: box"></a-plane>
+                <a-plane id="northGoalFloor" color="#ff0000" height="1.5" width="7.02" rotation="-90 0 0" position="0 -1.21 0" ammo-body="type: static" ammo-shape="type: box"></a-plane>
+            </a-entity>
+            
+            <a-entity id="southGoal" height="2.44" width="7.32" depth="1.5" position="0 1.21 45.75" >
+                <a-box material="transparent: false; opacity: 1;" color="#0000ff"
+                    height="0.15" width="7.32" depth="1.5" position="0 1.2 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                <a-box material="transparent: false; opacity: 1;" color="#0000ff"
+                    height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                <a-box material="transparent: false; opacity: 1;" color="#0000ff"
+                    height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                <a-text id="southGoalScore" color="#0000ff" value="0" position="0 2.5 0" align="center" anchor="center" baseline="center" scale ="10 10 10" rotation="0 180 0"></a-text>
+                <a-plane id="southGoalBack" material="opacity: 0.5; emissive: #0000ff; emissiveIntensity: 10" color="#0000ff" height="2.44" width="7.32" rotation="0 180 0" position="0 0 +0.76" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.01"></a-plane>
+                <a-plane id="northGoalFloor" color="#0000ff" height="1.5" width="7.02" rotation="-90 0 0" position="0 -1.21 0" ammo-body="type: static" ammo-shape="type: box"></a-plane>
+            </a-entity>
+            
             <!-- Create hero sphere -->
             <a-sphere id="heroBall" position="0 0.11 0" radius="0.11" color="#DFFF00"
             ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8"></a-sphere>
