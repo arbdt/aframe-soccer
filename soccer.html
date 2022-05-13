@@ -42,11 +42,16 @@
 
             <!-- Create arena floor -->
             <a-entity id="arenaFloor" ammo-body="type: static" ammo-shape="type: box; fit: manual; halfExtents: 26 0.001 48" ammo-restitution="0.5" ammo-friction="1">
-                <a-plane color="#228B22" height="96" width="51" rotation="-90 0 0" position="0 -0.004 0" material="shader: flat;"></a-plane>
-                <a-plane color="#FFF" height="90" width="45" rotation="-90 0 0" position="0 -0.002 0"></a-plane>
-                <a-plane color="#228B22" height="89.7" width="44.7" rotation="-90 0 0" position="0 0 0" material="shader: flat;"></a-plane>
-                <a-ring color="#FFF" arc="360" radius-outer="9.15" radius-inner="9" position="0 0.001 0" rotation="-90 0 0"></a-ring>
-                <a-circle color="#FFF"radius="0.15" position="0 0.001 0" rotation="-90 0 0"></a-circle>
+                <!-- Field grass --><a-plane color="#228B22" height="96" width="51" rotation="-90 0 0" position="0 0 0" material="shader: flat;"></a-plane>
+                <!-- Field outer border --><a-entity>
+                    <a-plane color="#FFF" height="0.15" width="45" rotation="-90 0 0" position="0 0.001 -45.075"></a-plane>
+                    <a-plane color="#FFF" height="90" width="0.15" rotation="-90 0 0" position="-22.425 0.001 0"></a-plane>
+                    <a-plane color="#FFF" height="90" width="0.15" rotation="-90 0 0" position="22.425 0.001 0"></a-plane>
+                    <a-plane color="#FFF" height="0.15" width="45" rotation="-90 0 0" position="0 0.001 45.075"></a-plane>
+                </a-entity>
+                <!-- Centre ring --><a-ring color="#FFF" arc="360" radius-outer="9.15" radius-inner="9" position="0 0.001 0" rotation="-90 0 0"></a-ring>
+                <!-- Centre line --><a-plane color="#FFF" width="45" height="0.15" position="0 0.001 0" rotation="-90 0 0"></a-plane>
+                <!-- Centre mark --><a-circle color="#FFF" radius="0.15" position="0 0.001 0" rotation="-90 0 0"></a-circle>
             </a-entity>
 
             <!-- Create environment outer walls -->
