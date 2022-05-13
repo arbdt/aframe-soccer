@@ -12,6 +12,7 @@
         
         <!-- Register component(s) before scene -->
         <script>
+            // Component to set Ammo restitution value (bounciness)
             AFRAME.registerComponent('ammo-restitution', {
                 schema: { default: 0.5 },
                 init() {
@@ -23,6 +24,7 @@
                 }
             });
 
+            // Component to set Ammo friction value
             AFRAME.registerComponent('ammo-friction', {
                 schema: { default: 0.5 },
                 init() {
@@ -31,6 +33,41 @@
                     el.addEventListener('body-loaded', function () {
                         el.body.setFriction(friction);
                     });
+                }
+            });
+
+            // Component to check if ball is in a goal box
+            AFRAME.registerComponent('goal-check', {
+                tick: function () {
+                    // `this.el` is the element.
+                    // `object3D` is the three.js object.
+
+                    // `position` is a three.js Vector3.
+                    let position = this.el.object3D.position;
+
+                    let posX = position.x;
+                    let posY = position.y;
+                    let posZ = position.z;
+
+                    // Check north goal
+                    if(posX > -3.66 && posX < 3.66 && posY >= 0 && posY < 2.44 && posZ > -46.5 && posZ < -45){
+                        if(northGoal == false){
+                            northGoal = true;
+                            console.log("North goal reached!");
+                        }
+                    } else {
+                        northGoal = false;
+                    }
+
+                    // Check south goal
+                    if(posX > -3.66 && posX < 3.66 && posY >= 0 && posY < 2.44 && posZ > 45 && posZ < 46.5){
+                        if(southGoal == false){
+                            southGoal = true;
+                            console.log("South goal reached!");
+                        }
+                    } else {
+                        southGoal = false;
+                    }
                 }
             });
         </script>
@@ -101,9 +138,9 @@
                 <a-plane id="southGoalFloor" color="#0000ff" height="1.5" width="7.02" rotation="-90 0 0" position="0 -1.20 0" ammo-body="type: static" ammo-shape="type: box"></a-plane>
             </a-entity>
             
-            <!-- Create hero sphere -->
-            <a-sphere id="heroBall" position="0 0.11 0" radius="0.11" color="#DFFF00"
-            ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8"></a-sphere>
+            <!-- Create soccer ball -->
+            <a-sphere id="soccerBall" position="0 0.11 0" radius="0.11" color="#DFFF00"
+            ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8" ammo-friction="1" goal-check></a-sphere>
 
             <!-- Create scene camera -->
             <a-entity camera look-controls wasd-controls position="0 1.6 10" ammo-body="type: kinematic; emitCollisionEvents: true" ammo-restitution="0.3" ammo-shape="type: box; fit: manual; halfExtents: 1 1.6 1;">
