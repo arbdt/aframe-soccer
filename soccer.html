@@ -11,10 +11,24 @@
     <body>
         
         <script>
+            // Game modes
+            const modes = ['free', 'scored'];
+
+            // get settings from URL
+            var pageURL = new URL(window.location.href);
+            var gameMode = pageURL.searchParams.get('mode');
+            if(!(modes.includes(gameMode))){
+                gameMode = 'free';
+            }
+
             // Set up game variables
             // Goal checks
             var northGoal = false;
             var southGoal = false;
+
+            // Scoring mode scores
+            var northGoalScoreVal = 0;
+            var southGoalScoreVal = 0;
         </script>
         
         <!-- Register component(s) before scene -->
@@ -45,6 +59,7 @@
             });
 
             // Component to check if ball is in a goal box
+            // Component to check if ball is in a goal box
             AFRAME.registerComponent('goal-check', {
                 tick: function () {
                     // `this.el` is the element.
@@ -61,7 +76,9 @@
                     if(posX > -3.66 && posX < 3.66 && posY >= 0 && posY < 2.44 && posZ > -46.5 && posZ < -45){
                         if(northGoal == false){
                             northGoal = true;
-                            console.log("North goal reached!");
+                            if(gameMode == 'scored'){
+                                northGoalScoreVal += 1;
+                            }
                         }
                     } else {
                         northGoal = false;
@@ -71,7 +88,9 @@
                     if(posX > -3.66 && posX < 3.66 && posY >= 0 && posY < 2.44 && posZ > 45 && posZ < 46.5){
                         if(southGoal == false){
                             southGoal = true;
-                            console.log("South goal reached!");
+                            if(gameMode == 'scored'){
+                                southGoalScoreVal += 1;
+                            }
                         }
                     } else {
                         southGoal = false;
@@ -85,11 +104,21 @@
 
                     let visibility = this.el.object3D.visible;
                     
-                    if(northGoal == true && visibility == false){
-                        this.el.object3D.visible = true;
-                    } else if(northGoal == false){
-                        this.el.object3D.visible = false;
+                    // Free play mode
+                    if(gameMode == 'free'){
+                        if(northGoal == true && visibility == false){
+                            this.el.object3D.visible = true;
+                        } else if(northGoal == false){
+                            this.el.object3D.visible = false;
+                        }
                     }
+
+                    // Scored mode
+                    if(gameMode == 'scored'){
+                        this.el.setAttribute('value', northGoalScoreVal);
+                        this.el.object3D.visible = true;
+                    }
+                    
                 }
             });
 
@@ -99,10 +128,19 @@
 
                     let visibility = this.el.object3D.visible;
 
-                    if(southGoal == true && visibility == false){
+                    // Free play mode
+                    if(gameMode == 'free'){
+                        if(southGoal == true && visibility == false){
+                            this.el.object3D.visible = true;
+                        } else if(southGoal == false){
+                            this.el.object3D.visible = false;
+                        }
+                    }
+
+                    // Scored mode
+                    if(gameMode == 'scored'){
+                        this.el.setAttribute('value', southGoalScoreVal);
                         this.el.object3D.visible = true;
-                    } else if(southGoal == false) {
-                        this.el.object3D.visible = false;
                     }
                 }
             });
@@ -158,7 +196,7 @@
                     height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
                 <a-box material="transparent: false; opacity: 1;" color="#ff0000"
                     height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
-                <a-text id="northGoalScoreText" color="#ff0000" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale="10 10 10" visible="false" north-goal-display></a-text>
+                <a-text id="northGoalScoreText" side="double" color="#ff0000" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale="10 10 10" visible="false" north-goal-display></a-text>
                 <a-plane id="northGoalBack" material="opacity: 0.5; emissive: #ff0000; emissiveIntensity: 10" color="#ff0000" height="2.44" width="7.32" rotation="0 0 0" position="0 0 -0.76" ammo-body="type: static" ammo-shape="type: box"></a-plane>
                 <a-plane id="northGoalFloor" color="#ff0000" height="1.5" width="7.02" rotation="-90 0 0" position="0 -1.20 0" ammo-body="type: static" ammo-shape="type: box"></a-plane>
             </a-entity>
@@ -170,7 +208,7 @@
                     height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
                 <a-box material="transparent: false; opacity: 1;" color="#0000ff"
                     height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
-                <a-text id="southGoalScoreText" color="#0000ff" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale ="10 10 10" rotation="0 180 0" visible="false" south-goal-display></a-text>
+                <a-text id="southGoalScoreText" side="double" color="#0000ff" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale ="10 10 10" rotation="0 180 0" visible="false" south-goal-display></a-text>
                 <a-plane id="southGoalBack" material="opacity: 0.5; emissive: #0000ff; emissiveIntensity: 10" color="#0000ff" height="2.44" width="7.32" rotation="0 180 0" position="0 0 +0.76" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.01"></a-plane>
                 <a-plane id="southGoalFloor" color="#0000ff" height="1.5" width="7.02" rotation="-90 0 0" position="0 -1.20 0" ammo-body="type: static" ammo-shape="type: box"></a-plane>
             </a-entity>
@@ -179,12 +217,12 @@
             <a-sphere id="soccerBall" position="0 0.11 0" radius="0.11" color="#DFFF00"
             ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8" ammo-friction="0.4" goal-check></a-sphere>
 
-            <!-- Create scene camera -->
-            <a-entity camera look-controls wasd-controls position="0 1.6 10" ammo-body="type: kinematic; emitCollisionEvents: true" ammo-restitution="0.3" ammo-shape="type: box; fit: manual; halfExtents: 1 1.6 1;">
-                <!-- Create cursor -->
-                <a-entity cursor="fuse: true; fuseTimeout: 500"
+            <!-- Create scene camera (player) -->
+            <a-entity camera look-controls wasd-controls position="0 1.6 10" ammo-body="type: kinematic; emitCollisionEvents: true" ammo-restitution="0.3" ammo-shape="type: box; fit: manual; halfExtents: 1.6 1.6 0.05;">
+                <!-- Create box representing player camera collision -->
+                <a-entity
                     position="0 0 0"
-                    geometry="primitive: box; height: 3.2; width: 2; depth: 2;"
+                    geometry="primitive: box; height: 3.2; width: 3.2; depth: 0.1;"
                     material="color: black; transparent: true; opacity: 0.5;">
                 </a-entity>
             </a-entity>
