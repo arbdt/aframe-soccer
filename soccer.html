@@ -145,6 +145,29 @@
                 }
             });
             
+            // Component to display end message if ball goes out of bounds
+            AFRAME.registerComponent('end-display', {
+                tick: function () {
+
+                    let posY = this.el.object3D.position.y;
+                    let endMsg = document.querySelector('#endMsg');
+                    let endResults = document.querySelector('#scoredResults');
+                    let playerView = document.querySelector('[camera]')
+
+                    if(posY < 0){
+                        this.el.pause();
+                        playerView.pause();
+                        endMsg.setAttribute('text', `align:center; baseline: center; value: BALL OUT OF BOUNDS\n\nRefresh to restart, or go back to change mode`);
+                        endMsg.setAttribute('visible',true);
+
+                        if(gameMode == 'scored'){
+                            endMsg.setAttribute('geometry', "primitive: plane; height: 0.4; width: 1;");
+                            endMsg.setAttribute('text', `align:center; baseline: center; value: BALL OUT OF BOUNDS\n\nRefresh to restart, or go back to change mode\n\nRed\t${northGoalScoreVal}\t-\t${southGoalScoreVal}\tBlue`);
+                        }
+                    }
+                }
+            });
+            
         </script>
         
         <!-- Create scene -->
@@ -213,7 +236,7 @@
             
             <!-- Create soccer ball -->
             <a-sphere id="soccerBall" position="0 0.11 0" radius="0.11" color="#DFFF00"
-            ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8" ammo-friction="0.4" goal-check></a-sphere>
+            ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8" ammo-friction="0.4" goal-check end-display></a-sphere>
 
             <!-- Create scene camera (player) -->
             <a-entity camera look-controls wasd-controls position="0 1.6 10" ammo-body="type: kinematic; emitCollisionEvents: true" ammo-restitution="0.3" ammo-shape="type: box; fit: manual; halfExtents: 1.6 1.6 0.05;">
@@ -222,6 +245,14 @@
                     position="0 0 0"
                     geometry="primitive: box; height: 3.2; width: 3.2; depth: 0.1;"
                     material="color: black; transparent: true; opacity: 0.5;">
+                </a-entity>
+                <!-- Create ending message -->
+                <a-entity id="endMsg" position="0 0 -1"
+                    geometry="primitive: plane; height: 0.2; width: 1;"
+                    material="color: black; transparent: true; opacity: 0.5;"
+                    visible="false" text="align:center; baseline: center; value: GAME OVER\n\nRefresh to restart, or go back to change mode;">
+                    <a-entity id="scoredResults" visible="false" position="0 -0.25 0.1" width="1">
+                    </a-entity>
                 </a-entity>
             </a-entity>
             
