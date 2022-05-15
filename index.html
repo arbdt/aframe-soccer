@@ -5,18 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A-frame Soccer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>A-Frame Soccer</h1>
-    <p>Navigate around a soccer field built in A-frame with physics provided by Ammojs. Hit the ball with the camera to move it.</p>
-    <h4>Controls:</h4>
-    <table>
-        <tr><td>W</td><td>Move forward</td></tr>
-        <tr><td>S</td><td>Move backward</td></tr>
-        <tr><td>A</td><td>Strafe left</td></tr>
-        <tr><td>D</td><td>Strafe right</td></tr>
-        <tr><td>Left click + drag</td><td>Change camera direction</td></tr>
-    </table>
-    <p><a href="soccer.html">PLAY</a></p>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            background-image: url('screenshot.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #infoPane {
+            backdrop-filter: blur(5px);
+            background-color: rgb(0,0,0,0.5);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+
+        }
+        .centered {
+            text-align: center;
+        }
+
+        a {
+            font-weight: bold;
+            color: #bbb;
+        }
+
+    </style>
+    <div id="infoPane">
+        <h1 class="centered">A-Frame Soccer</h1>
+        <p>Navigate around a soccer field built in A-frame with physics provided by Ammojs. Hit the ball with the camera to move it.</p>
+    
+        <h4>Controls:</h4>
+        <table>
+            <tr><td>W</td><td>Move forward</td></tr>
+            <tr><td>S</td><td>Move backward</td></tr>
+            <tr><td>A</td><td>Strafe left</td></tr>
+            <tr><td>D</td><td>Strafe right</td></tr>
+            <tr><td>Left click + drag</td><td>Change camera direction</td></tr>
+        </table>
+
+        <h4 class="centered">Available modes:</h4>
+        <p><a href="soccer.html?mode=free">Free play</a> - Try to get the ball into a goal. No pressure, the only reward is the message "GOAL!" when you succeed.</p>
+        <p><a href="soccer.html?mode=scored">Scored</a> - Track the number of goals you can score before the ball glitches out of bounds.</p>
+
+        <h4 class="centered">This scene is designed for desktop/laptop use only, and is not guaranteed to function on mobile/tablet/vr devices.</h4>
+        </div>
 </body>
 </html>
