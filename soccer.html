@@ -171,13 +171,20 @@
         </script>
         
         <!-- Create scene -->
-        <a-scene  physics="driver: ammo; debug: false; debugDrawMode: 1;">
+        <a-scene  physics="driver: ammo; debug: false; debugDrawMode: 1;" shadow="type:pcfsoft;">
 
             <a-sky color="#007BA7"></a-sky>
+            
+            <!-- Lighting -->
+            <a-entity light="type: ambient; color: #BBB"></a-entity>
+            <a-entity light="type: directional; color: #FFF; intensity: 0.6; castShadow: true; shadowMapHeight:2048; shadowMapWidth:2048;
+                shadowCameraBottom: -50; shadowCameraFar: 50; shadowCameraLeft: -50; shadowCameraNear: -50; shadowCameraRight: 50; shadowCameraTop: 50;"
+                position="-0.5 1 1">
+            </a-entity>
 
             <!-- Create arena floor -->
-            <a-entity id="arenaFloor" ammo-body="type: static" ammo-shape="type: box; fit: manual; halfExtents: 26 0.001 48" ammo-restitution="0.5" ammo-friction="0.2">
-                <!-- Field grass --><a-plane color="#228B22" height="96" width="51" rotation="-90 0 0" position="0 0 0" material="shader: flat;"></a-plane>
+            <a-entity id="arenaFloor" ammo-body="type: static" ammo-shape="type: box; fit: manual; halfExtents: 26 0.001 48" ammo-restitution="0.5" ammo-friction="0.2" shadow="cast:false;">
+                <!-- Field grass --><a-plane color="#228B22" height="96" width="51" rotation="-90 0 0" position="0 0 0" ></a-plane>
                 <!-- Field outer border --><a-entity>
                     <a-plane color="#FFF" height="0.15" width="45" rotation="-90 0 0" position="0 0.001 -45.075"></a-plane>
                     <a-plane color="#FFF" height="90" width="0.15" rotation="-90 0 0" position="-22.425 0.001 0"></a-plane>
@@ -206,37 +213,39 @@
             </a-entity>
 
             <!-- Create environment outer walls -->
-            <a-plane id="worldNorthEdge" height="2.44" width="51" position="0 1.22 -48" rotation="0 0 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
-            <a-plane id="worldWestEdge" height="2.44" width="96" position="-25.5 1.22 0" rotation="0 90 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
-            <a-plane id="worldEastEdge" height="2.44" width="96" position="25.5 1.22 0" rotation="0 -90 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
-            <a-plane id="worldSouthEdge" height="2.44" width="51" position="0 1.22 48" rotation="0 180 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
+            <a-entity id="worldWalls" shadow>
+                <a-plane id="worldNorthEdge" height="2.44" width="51" position="0 1.22 -48" rotation="0 0 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
+                <a-plane id="worldWestEdge" height="2.44" width="96" position="-25.5 1.22 0" rotation="0 90 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
+                <a-plane id="worldEastEdge" height="2.44" width="96" position="25.5 1.22 0" rotation="0 -90 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
+                <a-plane id="worldSouthEdge" height="2.44" width="51" position="0 1.22 48" rotation="0 180 0" color="#b0b0b0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0"></a-plane>
+            </a-entity>
 
             <!-- Create arena goals -->
             <a-entity id="northGoal" height="2.44" width="7.32" depth="1.5" position="0 1.21 -45.75">
                 <a-box material="transparent: false; opacity: 1;" color="#ff0000"
-                    height="0.15" width="7.32" depth="1.5" position="0 1.2 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                    height="0.15" width="7.32" depth="1.5" position="0 1.2 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5" shadow></a-box>
                 <a-box material="transparent: false; opacity: 1;" color="#ff0000"
-                    height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                    height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5" shadow></a-box>
                 <a-box material="transparent: false; opacity: 1;" color="#ff0000"
-                    height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
-                <a-text id="northGoalScoreText" side="double" color="#ff0000" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale="10 10 10" visible="false" north-goal-display></a-text>
-                <a-box id="northGoalBack" material="opacity: 0.25;" color="#ff0000" height="2.33" width="7.02" depth="0.15" rotation="0 0 0" position="0 -0.04 -0.67" ammo-body="type: static" ammo-shape="type: box"></a-box>
+                    height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5" shadow></a-box>
+                <a-text id="northGoalScoreText" side="double" color="#ff0000" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale="10 10 10" visible="false" shadow="cast:false; receive: false;" north-goal-display></a-text>
+                <a-box id="northGoalBack" material="opacity: 0.25;" color="#ff0000" height="2.33" width="7.02" depth="0.15" rotation="0 0 0" position="0 -0.04 -0.67" ammo-body="type: static" ammo-shape="type: box" shadow="cast: false; receive: false;"></a-box>
             </a-entity>
             
             <a-entity id="southGoal" height="2.44" width="7.32" depth="1.5" position="0 1.21 45.75">
                 <a-box material="transparent: false; opacity: 1;" color="#0000ff"
-                    height="0.15" width="7.32" depth="1.5" position="0 1.2 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                    height="0.15" width="7.32" depth="1.5" position="0 1.2 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5" shadow></a-box>
                 <a-box material="transparent: false; opacity: 1;" color="#0000ff"
-                    height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
+                    height="2.33" width="0.15" depth="1.5" position="-3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5" shadow></a-box>
                 <a-box material="transparent: false; opacity: 1;" color="#0000ff"
-                    height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5"></a-box>
-                <a-text id="southGoalScoreText" side="double" color="#0000ff" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale ="10 10 10" rotation="0 180 0" visible="false" south-goal-display></a-text>
-                <a-box id="southGoalBack" material="opacity: 0.25;" color="#0000ff" height="2.33" width="7.02" depth="0.15" rotation="0 180 0" position="0 -0.04 +0.67" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.01"></a-box>
+                    height="2.33" width="0.15" depth="1.5" position="3.58 -0.04 0" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.5" shadow></a-box>
+                <a-text id="southGoalScoreText" side="double" color="#0000ff" value="GOAL!" position="0 2.5 0" align="center" anchor="center" baseline="center" scale ="10 10 10" rotation="0 180 0" visible="false" shadow="cast:false; receive: false;" south-goal-display></a-text>
+                <a-box id="southGoalBack" material="opacity: 0.25;" color="#0000ff" height="2.33" width="7.02" depth="0.15" rotation="0 180 0" position="0 -0.04 +0.67" ammo-body="type: static" ammo-shape="type: box" ammo-restitution="0.01" shadow="cast: false; receive: false;"></a-box>
             </a-entity>
             
             <!-- Create soccer ball -->
             <a-sphere id="soccerBall" position="0 0.11 0" radius="0.11" color="#DFFF00"
-            ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8" ammo-friction="0.4" goal-check end-display></a-sphere>
+            ammo-body="type: dynamic; emitCollisionEvents: true" ammo-shape="type: sphere" ammo-restitution="0.8" ammo-friction="0.4" goal-check end-display shadow></a-sphere>
 
             <!-- Create scene camera (player) -->
             <a-entity camera look-controls wasd-controls position="0 1.6 10" ammo-body="type: kinematic; emitCollisionEvents: true" ammo-restitution="0.3" ammo-shape="type: box; fit: manual; halfExtents: 1.6 1.6 0.05;">
